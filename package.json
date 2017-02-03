@@ -1,0 +1,33 @@
+{
+  "name": "chat",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.16.0",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.0",
+    "ejs": "~2.5.5",
+    "ejs-locals": "^1.0.2",
+    "express": "~4.14.1",
+    "mongodb": "^2.2.22",
+    "morgan": "~1.7.0",
+    "serve-favicon": "~2.3.2"
+  },
+  "description": "",
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ciel69/chat.git"
+  },
+  "author": "Ciel69",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ciel69/chat/issues"
+  },
+  "homepage": "https://github.com/ciel69/chat#readme",
+  "keywords": []
+}
