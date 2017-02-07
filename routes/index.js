@@ -1,9 +1,16 @@
-var express = require('express');
-var router = express.Router();
+module.exports = function(app) {
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+    app.get('/', require('./frontpage').get);
+    app.get('/users', require('./users').get);
+    app.get('/user/:id', require('./user').get);
 
-module.exports = router;
+/*
+    app.get('/login', require('./login').get);
+    app.post('/login', require('./login').post);
+
+    app.post('/logout', require('./logout').post);
+*/
+
+    // app.get('/chat', checkAuth, require('./chat').get);
+
+};
