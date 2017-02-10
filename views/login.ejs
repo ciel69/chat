@@ -42,7 +42,8 @@
                     window.location.href = "/chat";
                 },
                 403: function(jqXHR) {
-                    $('.error', form).html('Вы ввели не верный пароль');
+                    var error = JSON.parse(jqXHR.responseText);
+                    $('.error', form).html(error.message);
                 }
             }
         });

@@ -28,6 +28,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(errorhandler());
 var MongoStore = require('connect-mongo')(session);
 
 app.use(session({
@@ -37,12 +38,6 @@ app.use(session({
     store: new MongoStore({mongooseConnection: mongoose.connection})
 }));
 
-/*app.use(function(req, res, next) {
-    req.session.numberOfVisits = req.session.numberOfVisits + 1 || 1;
-    res.send("Visits: " + req.session.numberOfVisits);
-});*/
-
-
 app.use(require('middleware/sendHttpError'));
 app.use(require('middleware/loadUser'));
 
@@ -51,7 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.Router());
 
 require('routes')(app);
-app.use(errorhandler());
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(404);
