@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var log = require('lib/log')(module);
 var mongoose = require('lib/mongoose');
 var config = require('config');
-
+var errorhandler = require('errorhandler');
 var HttpError = require('error').HttpError;
 
 var index = require('./routes/index');
@@ -28,7 +28,6 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-
 var MongoStore = require('connect-mongo')(session);
 
 app.use(session({
@@ -45,12 +44,14 @@ app.use(session({
 
 
 app.use(require('middleware/sendHttpError'));
+app.use(require('middleware/loadUser'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.Router());
 
 require('routes')(app);
+app.use(errorhandler());
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(404);
@@ -66,7 +67,7 @@ app.use(function(err, req, res, next) {
         res.sendHttpError(err);
     } else {
         if (app.get('env') == 'development') {
-            express.errorHandler()(err, req, res, next);
+            errorhandler()(err, req, res, next);
         } else {
             log.error(err);
             err = new HttpError(res.status(err.status || 500));

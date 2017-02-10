@@ -2,7 +2,7 @@ var path = require('path');
 var util = require('util');
 var http = require('http');
 
-// ошибки для выдачи посетителю
+// РѕС€РёР±РєРё РґР»СЏ РІС‹РґР°С‡Рё РїРѕСЃРµС‚РёС‚РµР»СЋ
 function HttpError(status, message) {
     Error.apply(this, arguments);
     Error.captureStackTrace(this, HttpError);

@@ -1,4 +1,3 @@
-var express = require('express');
 var User = require('models/user').User;
 var HttpError = require('error').HttpError;
 var ObjectID = require('mongodb').ObjectID;
@@ -6,8 +5,8 @@ exports.get = function(req, res) {
     try {
         var id = new ObjectID(req.params.id);
     } catch (e) {
-        next(new HttpError(404, "User id not found"));
-        return;
+        // return next(res.sendHttpError(404));
+        return next(new HttpError(404, "User id not found"));
     }
 
     User.findById(id, function (err, user) {
