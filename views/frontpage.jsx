@@ -7,7 +7,7 @@ class FrontPage extends React.Component {
             <DefaultLayout
                 user={this.props.user}
                 title={this.props.title}>
-                <div>Hello {this.props.name}</div>
+                {/*<div>{this.props.name}</div>*/}
             </DefaultLayout>
         );
     }

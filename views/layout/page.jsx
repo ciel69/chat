@@ -7,17 +7,21 @@ class DefaultLayout extends React.Component {
             <html>
             <head>
                 <title>{this.props.title}</title>
-                <link rel='stylesheet' href='/css/style.css'/>
-                <link rel="stylesheet" href="/vendor/bower_components/bootstrap/dist/css/bootstrap.css"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                {/*<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>*/}
+                <link rel="stylesheet" href="/vendor/bower_components/materialize/dist/css/materialize.css"
+                      media="screen,projection"/>
                 <link rel="stylesheet" href="/css/style.css"/>
 
                 <script src="/vendor/bower_components/jquery/dist/jquery.js"/>
-                <script src="/vendor/bower_components/bootstrap/dist/js/bootstrap.js"/>
+                <script src="/vendor/bower_components/materialize/dist/js/materialize.js"/>
+                <script src="/js/app.js"/>
             </head>
             <body>
             <Menu user={this.props.user}/>
-            <h1>{this.props.title}</h1>
-            {this.props.children}
+            <div className="container">
+                {this.props.children}
+            </div>
             </body>
             </html>
         );

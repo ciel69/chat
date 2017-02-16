@@ -36,11 +36,13 @@ app.use(cookieParser());
 app.use(errorhandler());
 var MongoStore = require('connect-mongo')(session);
 
+var sessionStore = require('lib/sessionStore');
+
 app.use(session({
     secret: config.get('session:secret'),
     key: config.get('session:key'),
     cookie: config.get('session:cookie'),
-    store: new MongoStore({mongooseConnection: mongoose.connection})
+    store: sessionStore
 }));
 
 app.use(require('middleware/sendHttpError'));
