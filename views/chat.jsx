@@ -8,32 +8,63 @@ class Chat extends React.Component {
                 user={this.props.user}
                 title="Чат">
                 <script src="vendor/bower_components/socket.io-client/dist/socket.io.js"/>
+                <div className="row">
+                    <div className="body_chat col s12">
+                        <div id="chat">
+                            <div className="preloader-wrapper big active">
+                                <div className="spinner-layer spinner-blue">
+                                    <div className="circle-clipper left">
+                                        <div className="circle"></div>
+                                    </div>
+                                    <div className="gap-patch">
+                                        <div className="circle"></div>
+                                    </div>
+                                    <div className="circle-clipper right">
+                                        <div className="circle"></div>
+                                    </div>
+                                </div>
 
-                <div id="room">
-                    <ul></ul>
-                    <form>
-                        <input className="form-control" autoComplete="off" autoFocus="" placeholder="Сообщение..."/>
-                    </form>
+                                <div className="spinner-layer spinner-red">
+                                    <div className="circle-clipper left">
+                                        <div className="circle"></div>
+                                    </div>
+                                    <div className="gap-patch">
+                                        <div className="circle"></div>
+                                    </div>
+                                    <div className="circle-clipper right">
+                                        <div className="circle"></div>
+                                    </div>
+                                </div>
+
+                                <div className="spinner-layer spinner-yellow">
+                                    <div className="circle-clipper left">
+                                        <div className="circle"></div>
+                                    </div>
+                                    <div className="gap-patch">
+                                        <div className="circle"></div>
+                                    </div>
+                                    <div className="circle-clipper right">
+                                        <div className="circle"></div>
+                                    </div>
+                                </div>
+
+                                <div className="spinner-layer spinner-green">
+                                    <div className="circle-clipper left">
+                                        <div className="circle"></div>
+                                    </div>
+                                    <div className="gap-patch">
+                                        <div className="circle"></div>
+                                    </div>
+                                    <div className="circle-clipper right">
+                                        <div className="circle"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <script dangerouslySetInnerHTML={{
-                    __html: `
-                            var socket = io.connect();
-                            var form = $('#room form');
-                            var ul = $('#room ul');
-                            form.submit(function() {
-                                var input = $(this).find('input');
-                                var text = input.val();
-                                input.val('');
-                                socket.emit('message', text, function(data) {
-                                    $('<li>', {text: text}).appendTo(ul);
-                                });
-                                return false;
-                            });
-                            socket.on('message', function(text) {
-                                $('<li>', {text: text}).appendTo(ul);
-                            });
-                    `
-                }}/>
+                <script type="text/javascript" src="/js/smileys.js"/>
+                <script src="/js/chat/index.js"/>
             </DefaultLayout>
         );
     }

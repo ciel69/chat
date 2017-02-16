@@ -1,8 +1,26 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+html,
+body{
+  height: 100%;
 }
 
-a {
-  color: #00B7FF;
+.body_chat .message_list{
+  overflow-y: scroll;
+  /*display: flex;
+  flex-direction: column;
+  justify-content: flex-end;*/
+}
+#sidenav-overlay{
+  z-index: 1;
+}
+nav{
+  background-color: #464646;
+}
+
+@media (max-width: 768px) {
+  #toast-container {
+    top: 0 !important;
+    right: auto !important;
+    bottom: auto;
+    left:7%;
+  }
 }

@@ -66,6 +66,20 @@ schema.statics.authorize = function(username, password, callback) {
     ], callback);
 };
 
+
+var messageSchema = new Schema({
+    message: {
+        type: String,
+        unique: false,
+        required: true
+    },
+    user_id: { type: String, ref: 'User'},
+    created: {
+        type: Date,
+        default: Date.now
+    }
+});
+exports.Message = mongoose.model('Message', messageSchema);
 exports.User = mongoose.model('User', schema);
 
 

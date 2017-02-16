@@ -12,15 +12,15 @@ class Login extends React.Component {
                     <div className="form-group">
                         <label htmlFor="input-username" className="col-lg-2 control-label">Имя</label>
                         <div className="col-lg-10">
-                            <input name="username" value="name" type="text" className="form-control" id="input-username"
-                                   placeholder="Имя"/>
+                            <input name="username" value="" type="text" className="form-control" id="input-username"
+                                   placeholder="Имя" required="required"/>
                         </div>
                     </div>
                     <div className="form-group">
                         <label htmlFor="input-password" className="col-lg-2 control-label">Пароль</label>
                         <div className="col-lg-10">
-                            <input name="password" value="pass" type="password" className="form-control"
-                                   id="input-password" placeholder="Пароль"/>
+                            <input name="password" value="" type="password" className="form-control"
+                                   id="input-password" placeholder="Пароль" required="required"/>
                         </div>
                     </div>
                     <div className="form-group">
@@ -36,7 +36,7 @@ class Login extends React.Component {
                          $(document.forms['login-form']).on('submit', function() {
                                 var form = $(this);
                                 $('.error', form).html('');
-                                $(":submit", form).button("loading");
+                                {/*$(":submit", form).button("loading");*/}
                                 $.ajax({
                                     url: "/login",
                                     method: "POST",
