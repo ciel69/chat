@@ -9,6 +9,7 @@ var HttpError = require('error').HttpError;
 var User = require('models/user').User;
 var Message = require('models/user').Message;
 // var Message = require('models/message').Message;
+const Long = require('mongodb').Long;
 
 function loadSession(sid, callback) {
 
@@ -125,10 +126,11 @@ module.exports = function (server) {
         socket.broadcast.emit('join', username);
 
         socket.on('message', function(text, cb) {
-            // Message.save({message: text});
+            // Message.save({message: text});Long.fromString(text, 10)
             var new_message = new Message({message: text, user_id: user_id});
+            // console.log(new_message);
             new_message.save(function(err) {
-                if (err) return callback(err);
+                if (err) return cb(err);
                 cb(null, new_message);
             });
             socket.broadcast.emit('message', username, text);

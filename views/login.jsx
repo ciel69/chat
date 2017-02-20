@@ -9,26 +9,25 @@ class Login extends React.Component {
                 title="Регистрация и вход">
                 <p>Введите имя пользователя и пароль. Если такого пользователя нет - он будет создан.</p>
                 <form className="form-horizontal login-form" name="login-form">
-                    <div className="form-group">
-                        <label htmlFor="input-username" className="col-lg-2 control-label">Имя</label>
+                    <div className="input-field col s12">
                         <div className="col-lg-10">
-                            <input name="username" value="" type="text" className="form-control" id="input-username"
-                                   placeholder="Имя" required="required"/>
+                            <input name="username" value="" type="text" className="validate" id="input-username"
+                                   required="required"/>
+                            <label htmlFor="input-username">Имя</label>
                         </div>
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="input-password" className="col-lg-2 control-label">Пароль</label>
-                        <div className="col-lg-10">
-                            <input name="password" value="" type="password" className="form-control"
-                                   id="input-password" placeholder="Пароль" required="required"/>
-                        </div>
+                    <div className="input-field col s12">
+                        {/*<label htmlFor="input-password" className="col-lg-2 control-label">Пароль</label>*/}
+                        <input name="password" value="" type="password" className="validate" autoComplete="off"
+                               autoFocus=""
+                               required="required"
+                               id="input-password"/>
+                        <label htmlFor="input-password">Пароль</label>
                     </div>
-                    <div className="form-group">
-                        <div className="col-lg-offset-2 col-lg-10">
-                            <button type="submit" className="btn btn-primary" data-loading-text="Отправляю...">Войти
-                            </button>
-                            <span className="help-block error"> </span>
-                        </div>
+                    <div className="input-field col s12">
+                        <button type="submit" className="btn btn-primary" data-loading-text="Отправляю...">Войти
+                        </button>
+                        <span className="help-block error"> </span>
                     </div>
                 </form>
                 <script dangerouslySetInnerHTML={{

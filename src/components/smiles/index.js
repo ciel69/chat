@@ -1,16 +1,24 @@
+import React, {Component} from 'react';
+import {render} from 'react-dom';
+
+const path = "../smileys/";
+class RenderSmile extends React.Component {
+    render() {
+        return <img className="smiley" src={this.prop.src} />;
+    }
+}
 function str_replace(search, replace, subject) {
     return subject.split(search).join(replace);
 }
 
-function replaceSmileys(text) {
-    function sm(codes, img_name) { //для смайликов... жесть!
+function Smiles(text) {
+    function sm(codes, img_name) {
         function rsm(from, to) {
-            path = "../smileys/";
-            text = str_replace(from, '<img class="smiley" src="' + path + to + '" />', text);
+            text = str_replace(from, path + to, text);
         }
 
         codes = codes.split(',');
-        for (index in codes) {
+        for (let index in codes) {
             rsm(codes[index], img_name);
         }
     }
@@ -117,5 +125,7 @@ function replaceSmileys(text) {
     sm('-_-', 'D83DDE11.png');
     sm(':|', 'D83DDE10.png');
 
-    return text;
+    return <RenderSmile src={text}/>;
 }
+
+export default Smiles;
