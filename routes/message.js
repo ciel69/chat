@@ -5,6 +5,6 @@ var newMessages;
 exports.get = function (req, res) {
     Message.find({}, function (err, messages) {
         if (err) throw err;
-        res.json(messages);
-    }).limit(100).populate("user_id");
+        res.json(messages.reverse());
+    }).sort({_id:-1}).limit(100).populate("user_id");
 };

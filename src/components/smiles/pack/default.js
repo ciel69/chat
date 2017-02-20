@@ -1,49 +1,46 @@
-function str_replace(search, replace, subject) {
-    return subject.split(search).join(replace);
-}
+import Smile from '../index';
 
-function replaceSmileys(text) {
-    function sm(codes, img_name) { //для смайликов... жесть!
-        function rsm(from, to) {
-            path = "../smileys/";
-            text = str_replace(from, '<img class="smiley" src="' + path + to + '" />', text);
-        }
+function defaultSmile(sm) {
+    "use strict";
+    const options = {
+        'O:-),O=)': 'aa.gif',
+        ':-),:),=)': 'ab.gif',
+        ':-(,:(,;(': 'ac.gif',
+        ';),;-)': 'glad.gif',
+        ':-P,:P': 'ae.gif',
+        '8-),8)': 'af.gif',
+        ':-D,:D,xD,=D': 'ag.gif',
+        ':-[': 'ah.gif',
+        '=-O': 'ai.gif',
+        ':-*,:*,=*': 'aj.gif',
+        ":\'(,:\'-(": 'ak.gif',
+        ':-X,:-x': 'al.gif',
+        '>:o': 'am.gif',
+        ':-|': 'an.gif',
+        ':-\\,:-/,:/,:\\': 'ao.gif',
+        '*JOKINGLY*': 'ap.gif',
+        ']:->': 'aq.gif',
+        '[:-}': 'ar.gif',
+        '*KISSED*': 'as.gif',
+        ':-!': 'at.gif',
+        '*TIRED*': 'au.gif',
+        '*STOP*': 'av.gif',
+        '*KISSING*': 'aw.gif',
+        '@}->--': 'ax.gif',
+        '*THUMBS UP*': 'ay.gif',
+        '*DRINK*': 'az.gif',
+        '*IN LOVE*': 'ba.gif',
+        '@=': 'bb.gif',
+        '*HELP*': 'bc.gif',
+    };
 
-        codes = codes.split(',');
-        for (index in codes) {
-            rsm(codes[index], img_name);
-        }
-    }
-
-    sm('O:-),O=)', 'aa.gif');
-    sm(':-),:),=)', 'ab.gif');
-    sm(':-(,:(,;(', 'ac.gif');
-    sm(';),;-)', 'glad.gif');
-    sm(':-P,:P', 'ae.gif');
-    sm('8-),8)', 'af.gif');
-    sm(':-D,:D,xD,=D', 'ag.gif');
-    sm(':-[', 'ah.gif');
-    sm('=-O', 'ai.gif');
-    sm(':-*,:*,=*', 'aj.gif');
-    sm(":\'(,:\'-(", 'ak.gif');
-    sm(':-X,:-x', 'al.gif');
-    sm('>:o', 'am.gif');
-    sm(':-|', 'an.gif');
-    sm(':-\\,:-/,:/,:\\', 'ao.gif');
-    sm('*JOKINGLY*', 'ap.gif');
-    sm(']:->', 'aq.gif');
-    sm('[:-}', 'ar.gif');
-    sm('*KISSED*', 'as.gif');
-    sm(':-!', 'at.gif');
-    sm('*TIRED*', 'au.gif');
-    sm('*STOP*', 'av.gif');
-    sm('*KISSING*', 'aw.gif');
-    sm('@}->--', 'ax.gif');
-    sm('*THUMBS UP*', 'ay.gif');
-    sm('*DRINK*', 'az.gif');
-    sm('*IN LOVE*', 'ba.gif');
-    sm('@=', 'bb.gif');
-    sm('*HELP*', 'bc.gif');
+    sm();
+    sm();
+    sm();
+    sm();
+    sm();
+    sm();
+    sm();
     sm("\\m/", 'bd.gif');
     sm('%)', 'be.gif');
     sm('*OK*', 'bf.gif');
@@ -116,6 +113,7 @@ function replaceSmileys(text) {
     //VK
     sm('-_-', 'D83DDE11.png');
     sm(':|', 'D83DDE10.png');
-
-    return text;
+    return options;
 }
+
+export default defaultSmile();

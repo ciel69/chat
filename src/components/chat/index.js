@@ -2,7 +2,9 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import Audio from './audio';
 import MessageList from './message_list';
-import MessageFetch from './get_message';
+import MessageFetch from './fetch/get_message';
+import BindFunc from './bindfunction/const';
+import ContentEditable from '../react-contenteditable';
 
 const socket = io.connect('', {
     reconnect: false
@@ -15,23 +17,10 @@ export default class Chat extends Component {
         super(props);
         this.state = {
             messages: [""],
-            inputMessage: ""
+            inputMessage: "",
+            html: "<b>Hello <i>World</i></b>"
         };
-        this._connect = this._connect.bind(this);
-        this._setInput = this._setInput.bind(this);
-        this.doSomething = this.doSomething.bind(this);
-        this._message = this._message.bind(this);
-        this._leave = this._leave.bind(this);
-        this._joined = this._joined.bind(this);
-        this._connect = this._connect.bind(this);
-        this._disconnect = this._disconnect.bind(this);
-        this._logout = this._logout.bind(this);
-        this._errorEvent = this._errorEvent.bind(this);
-        this._sendMessage = this._sendMessage.bind(this);
-        this._printMessage = this._printMessage.bind(this);
-        this._printStatus = this._printStatus.bind(this);
-        this.getMessage = this.getMessage.bind(this);
-        this._rendMessages = this._rendMessages.bind(this);
+        BindFunc(this);
     }
 
     getMessage() {
@@ -41,18 +30,15 @@ export default class Chat extends Component {
         });
 
         return (promise.then(result => {
-            "use strict";
-            console.log(result);
             _this._printMessage(result);
-            // _this._rendMessages(result);
-            $('.message_list').animate({scrollTop: +2000}, 0);
-            // return result;
+            $('.message_list').animate({scrollTop: +9999}, 0);
         }));
     }
 
-    doSomething(e) {
+    doSomething() {
+        console.log("test");
         this._sendMessage();
-        e.preventDefault();
+        // e.preventDefault();
     }
 
     componentDidMount() {
@@ -70,33 +56,27 @@ export default class Chat extends Component {
     }
 
     _message(username, message) {
-        // this._printMessage(username + "> " + message);
-        this._printMessage([{user_id:{username: username}, message: message}]);
+        this._printMessage([{user_id: {username: username}, message: message}]);
         $('#chatAudio')[0].play();
     }
 
     _leave(username) {
-        // this._printStatus(username + " вышел из чата");
         var $toastContent = $('<span>' + username + '" вышел из чата"</span>');
         Materialize.toast($toastContent, 5000);
     }
 
     _joined(username) {
-        // this._printStatus(username + " вошёл в чат");
         var $toastContent = $('<span>' + username + '" вошёл в чат"</span>');
         Materialize.toast($toastContent, 5000);
     }
 
     _connect() {
-        // this._printMessage(test_message);
-        // this._printStatus("соединение установлено");
         var $toastContent = $('<span>Соединение установлено</span>');
         Materialize.toast($toastContent, 5000);
         this.getMessage();
     }
 
     _disconnect() {
-        // this._printStatus("соединение потеряно");
         var $toastContent = $('<span>Соединение потеряно</span>');
         Materialize.toast($toastContent, 5000);
         socket.emit('error');
@@ -108,7 +88,6 @@ export default class Chat extends Component {
 
     _errorEvent(reason) {
         if (reason == "handshake unauthorized") {
-            // this._printStatus("вы вышли из сайта");
             var $toastContent = $('<span>Вы вышли из сайта</span>');
             Materialize.toast($toastContent, 5000)
         } else {
@@ -123,7 +102,7 @@ export default class Chat extends Component {
         const text = _this.state.inputMessage;
 
         socket.emit('message', text, function () {
-            _this._printMessage([{user_id:{username: "я"}, message: text}]);
+            _this._printMessage([{user_id: {username: "я"}, message: text}]);
         });
         this.setState({inputMessage: ""});
         return false;
@@ -132,44 +111,54 @@ export default class Chat extends Component {
     _printMessage(text) {
         let arrMessage = this.state.messages;
         if (text instanceof Array) {
-            // arrMessage = $.extend({}, arrMessage, text);
             arrMessage = arrMessage.concat(text);
-            console.log("test");
-            console.log(arrMessage);
         } else {
             arrMessage.push(text);
         }
         this.setState({messages: arrMessage});
-        $('.message_list').animate({scrollTop: +2000}, 0);
+        $('.message_list').animate({scrollTop: +9999}, 0);
     }
 
     _setInput(e) {
+        let _this = this;
+        // console.log(e.target);
+        if (e.target.charCode == 13 && this.state.inputMessage != "") {
+            _this.doSomething();
+            return false;
+        }
         this.setState({inputMessage: e.target.value});
+        // this.setState({html: event.target.value});
     }
 
     _rendMessages(obMessage) {
-        if(!!obMessage)
-        return (
-            <MessageList
-                messages={obMessage}
-            />
-        );
+        if (!!obMessage)
+            return (
+                <MessageList
+                    messages={obMessage}
+                />
+            );
     }
 
     render() {
         return (
             <div>
                 <Audio/>
-                <form onSubmit={this.doSomething}>
+                <form id="chatForm" onSubmit={this.doSomething}>
                     <MessageList
                         messages={this.state.messages}
                     />
                     <div className="input-field col s12">
-                        <input id="password" type="text"
-                               onChange={this._setInput} className="validate" autoComplete="off" autoFocus=""
-                               required="required"
-                               value={this.state.inputMessage}/>
-                        <label htmlFor="password">Сообщение</label>
+                        {/*<input id="message" type="text"
+                         onChange={this._setInput} className="validate" autoComplete="off" autoFocus=""
+                         required="required"
+                         value={this.state.inputMessage}/>*/}
+                        <ContentEditable id="message"
+                                         className="validate"
+                                         html={this.state.inputMessage} // innerHTML of the editable div
+                                         disabled={false}       // use true to disable edition
+                                         onChange={this._setInput} // handle innerHTML change
+                        />
+                        <label htmlFor="message">Сообщение</label>
                     </div>
                 </form>
             </div>
