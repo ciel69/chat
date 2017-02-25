@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 
-function getMessage() {
-    return fetch('/message').then(function (response) {
-        return response.json();
-    }).catch(function (error) {
-        console.log('Request failed', error);
+export default function getMessage() {
+    $.ajax({
+        type: 'POST',
+        url: '/message',
+        success: function(msg){
+            return msg.json();
+        }
     });
 }
-
-export default getMessage;

@@ -10,12 +10,21 @@ var mongoose = require('lib/mongoose');
 var config = require('config');
 var errorhandler = require('errorhandler');
 var HttpError = require('error').HttpError;
+var webpack = require('webpack');
+var webpackDevMiddleware = require('webpack-dev-middleware');
+var webpackHotMiddleware = require('webpack-hot-middleware');
+var config_w = require('./webpack.config');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 var user = require('./routes/user');
 
 var app = express();
+
+var compiler = webpack(config_w);
+app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config_w.output.publicPath }));
+app.use(webpackHotMiddleware(compiler));
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
