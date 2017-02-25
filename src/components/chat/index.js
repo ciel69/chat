@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import Audio from './audio';
@@ -5,6 +6,8 @@ import MessageList from './message_list';
 import MessageFetch from './fetch/get_message';
 import BindFunc from './bindfunction/const';
 import ContentEditable from '../react-contenteditable';
+
+let io, $, Materialize;
 
 const socket = io.connect('', {
     reconnect: false
@@ -16,27 +19,19 @@ export default class Chat extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            messages: [""],
-            inputMessage: "",
-            html: "<b>Hello <i>World</i></b>"
+            messages: [''],
+            inputMessage: ''
         };
         BindFunc(this);
     }
 
     getMessage() {
         let _this = this;
-        let promise = new Promise((resolve, reject) => {
-            resolve(MessageFetch());
-        });
-
-        return (promise.then(result => {
-            _this._printMessage(result);
-            $('.message_list').animate({scrollTop: +9999}, 0);
-        }));
+        _this._printMessage(MessageFetch());
+        $('.message_list').animate({scrollTop: +9999}, 0);
     }
 
     doSomething() {
-        console.log("test");
         this._sendMessage();
         // e.preventDefault();
     }
@@ -87,7 +82,7 @@ export default class Chat extends Component {
     }
 
     _errorEvent(reason) {
-        if (reason == "handshake unauthorized") {
+        if (reason == 'handshake unauthorized') {
             var $toastContent = $('<span>Вы вышли из сайта</span>');
             Materialize.toast($toastContent, 5000)
         } else {
@@ -102,7 +97,7 @@ export default class Chat extends Component {
         const text = _this.state.inputMessage;
 
         socket.emit('message', text, function () {
-            _this._printMessage([{user_id: {username: "я"}, message: text}]);
+            _this._printMessage([{user_id: {username: 'я'}, message: text}]);
         });
         this.setState({inputMessage: ""});
         return false;
@@ -122,7 +117,7 @@ export default class Chat extends Component {
     _setInput(e) {
         let _this = this;
         // console.log(e.target);
-        if (e.target.charCode == 13 && this.state.inputMessage != "") {
+        if (e.target.charCode == 13 && this.state.inputMessage != '') {
             _this.doSomething();
             return false;
         }
@@ -143,22 +138,22 @@ export default class Chat extends Component {
         return (
             <div>
                 <Audio/>
-                <form id="chatForm" onSubmit={this.doSomething}>
+                <form id='chatForm' onSubmit={this.doSomething}>
                     <MessageList
                         messages={this.state.messages}
                     />
-                    <div className="input-field col s12">
+                    <div className='input-field col s12'>
                         {/*<input id="message" type="text"
                          onChange={this._setInput} className="validate" autoComplete="off" autoFocus=""
                          required="required"
                          value={this.state.inputMessage}/>*/}
-                        <ContentEditable id="message"
-                                         className="validate"
+                        <ContentEditable id='message'
+                                         className='validate'
                                          html={this.state.inputMessage} // innerHTML of the editable div
                                          disabled={false}       // use true to disable edition
                                          onChange={this._setInput} // handle innerHTML change
                         />
-                        <label htmlFor="message">Сообщение</label>
+                        <label htmlFor='message'>Сообщение</label>
                     </div>
                 </form>
             </div>
@@ -167,5 +162,5 @@ export default class Chat extends Component {
 }
 render(
     <Chat/>,
-    document.getElementById("chat")
+    document.getElementById('chat')
 );
