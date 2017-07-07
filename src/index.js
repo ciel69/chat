@@ -8,6 +8,6 @@ const HelloWorld = React.createClass({
     }
 });
 render(
-    <HelloWorld phrase="ES6"/>,
-    document.getElementById("app")
+    <HelloWorld phrase='ES6'/>,
+    document.getElementById('app')
 );
