@@ -74,16 +74,12 @@ app.use(require('middleware/loadUser'));
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.use(express.Router());
-// app.use(checkAuth);
-/*app.get('/', function(req, res, next) {
- req.session.message = 'Hello World';
- next();
- });*/
+
 require('routes')(app);
-// catch 404 and forward to error handler
+
 app.use((req, res) => {
     const store = configureStore();
-    // store.dispatch(checkUser(!!req.session.user));
+    store.dispatch(checkUser(!!req.session.user));
     match({routes: routes(store), location: req.url}, (error, redirectLocation, renderProps) => {
         if (redirectLocation) { // Если необходимо сделать redirect
             return res.redirect(301, redirectLocation.pathname + redirectLocation.search);
@@ -107,6 +103,10 @@ app.use((req, res) => {
         const state = store.getState();
 
         /* res.cookie('authHeaders', JSON.stringify(getHeaders(store.getState())), { maxAge: Date.now() + 14 * 24 * 3600 * 1000 });*/
+        /*if(!!req.session.user){
+            state.auth.isAuthenticated = 'true';
+        }*/
+
         return res.end(renderHTML(componentHTML, state));
     });
 });
