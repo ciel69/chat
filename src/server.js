@@ -74,16 +74,12 @@ app.use(require('middleware/loadUser'));
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.use(express.Router());
-// app.use(checkAuth);
-/*app.get('/', function(req, res, next) {
- req.session.message = 'Hello World';
- next();
- });*/
+
 require('routes')(app);
-// catch 404 and forward to error handler
+
 app.use((req, res) => {
     const store = configureStore();
-    // store.dispatch(checkUser(!!req.session.user));
+    store.dispatch(checkUser(!!req.session.user));
     match({routes: routes(store), location: req.url}, (error, redirectLocation, renderProps) => {
         if (redirectLocation) { // Если необходимо сделать redirect
             return res.redirect(301, redirectLocation.pathname + redirectLocation.search);
