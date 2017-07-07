@@ -1,11 +1,11 @@
-var crypto = require('crypto');
-var async = require('async');
-var util = require('util');
+const crypto = require('crypto');
+const async = require('async');
+const util = require('util');
 
-var mongoose = require('../lib/mongoose'),
+const mongoose = require('../lib/mongoose'),
     Schema = mongoose.Schema;
 
-var schema = new Schema({
+const schema = new Schema({
     username: {
         type: String,
         unique: true,
@@ -42,7 +42,7 @@ schema.methods.checkPassword = function(password) {
     return this.encryptPassword(password) === this.hashedPassword;
 };
 schema.statics.authorize = function(username, password, callback) {
-    var User = this;
+    const User = this;
 
     async.waterfall([
         function(callback) {
@@ -56,7 +56,7 @@ schema.statics.authorize = function(username, password, callback) {
                     callback(new AuthError("Пароль неверен"));
                 }
             } else {
-                var user = new User({username: username, password: password});
+                const user = new User({username: username, password: password});
                 user.save(function(err) {
                     if (err) return callback(err);
                     callback(null, user);
@@ -67,7 +67,7 @@ schema.statics.authorize = function(username, password, callback) {
 };
 
 
-var messageSchema = new Schema({
+const messageSchema = new Schema({
     message: {
         type: String,
         unique: false,
