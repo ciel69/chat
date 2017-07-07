@@ -103,10 +103,6 @@ app.use((req, res) => {
         const state = store.getState();
 
         /* res.cookie('authHeaders', JSON.stringify(getHeaders(store.getState())), { maxAge: Date.now() + 14 * 24 * 3600 * 1000 });*/
-        /*if(!!req.session.user){
-            state.auth.isAuthenticated = 'true';
-        }*/
-
         return res.end(renderHTML(componentHTML, state));
     });
 });
